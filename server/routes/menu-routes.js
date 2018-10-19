@@ -6,6 +6,7 @@ router.get('/', menuCtrl.getComandas)
 router.post('/', menuCtrl.createComanda)
 router.get('/:id', menuCtrl.getComanda)
 router.put('/:id', menuCtrl.editComanda)
-router.delete('/:id', menuCtrl.deleteComanda)
+router.delete('/:id', menuCtrl.deleteComanda
+)
 
 module.exports = router

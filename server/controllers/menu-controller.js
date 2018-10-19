@@ -8,28 +8,40 @@ comandaCtrl.getComandas = async (req, res) => {
   const Comandas = await comanda.find()
   res.json(Comandas)
   // console.log(comandas)
-  
+
 }
 
 comandaCtrl.createComanda = async (req, res) => {
   const Comanda = new comanda (req.body)
   await Comanda.save()
-  console.log(Comanda)
+  // console.log(Comanda)
   res.json({
-      'status': 'Comanda almacenada'
+    'status': 'Comanda almacenada'
   })
 }
 
-comandaCtrl.getComanda = function () {
-
+comandaCtrl.getComanda = async (req, res) => {
+  // console.log(req.params.id)
+  const Comanda = await comanda.findById(req.params.id)
+  res.json(Comanda)
 }
 
-comandaCtrl.editComanda = function () {
+comandaCtrl.editComanda = async (req, res) => {
+  const { id } = req.params
+  const Comanda = {
+    name: req.body.name,
+    desayuno: req.body.desayuno,
+    comida: req.body.comida,
+    resumenComanda: req.body.resumenComanda
+  }
+  console.log(Comanda); 
+  await comanda.findByIdAndUpdate(id, {$set: Comanda}, {new: true})
+  res.json({status: 'Comanda Actualizada'})
+}
 
-} 
-
-comandaCtrl.deleteComanda = function () {
-
+comandaCtrl.deleteComanda = async (req, res) => {
+  await comanda.findByIdAndRemove(req.params.id)
+  res.json({ status: 'Comanda Eliminada'})
 }
 
 module.exports = comandaCtrl

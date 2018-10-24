@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
         message: 'Accion de prueba de la ruta "home" en el servidor de NodeJS'
     })
 })
-app.get('/pruebas', (req, res) => {
+app.post('/pruebas', (req, res) => {
     res.status(200).send({
         message: 'Accion de prueba de la ruta "pruebas" en el servidor de NodeJS'
     })

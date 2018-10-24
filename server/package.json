@@ -1,0 +1,19 @@
+{
+  "name": "cdmx-2018-06-bc-core-am-burger-queen",
+  "version": "1.0.0",
+  "description": "back end para el proyecto de burguer queen",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MicheleBecerra/cdmx-2018-06-bc-core-am-burger-queen.git"
+  },
+  "author": "Michele Becerra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MicheleBecerra/cdmx-2018-06-bc-core-am-burger-queen/issues"
+  },
+  "homepage": "https://github.com/MicheleBecerra/cdmx-2018-06-bc-core-am-burger-queen#readme"
+}

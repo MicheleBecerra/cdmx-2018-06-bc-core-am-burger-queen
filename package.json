@@ -1,0 +1,29 @@
+{
+  "name": "cdmx-2018-06-bc-core-am-burger-queen",
+  "version": "1.0.0",
+  "description": "Nos acaban de enviar un correo con una solicitud para un nuevo proyecto. Hay un\r restaurante que nos ha contactado porque quieren que alguien les construya una\r interfaz donde puedan tomar pedidos usando una tablet.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MicheleBecerra/cdmx-2018-06-bc-core-am-burger-queen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MicheleBecerra/cdmx-2018-06-bc-core-am-burger-queen/issues"
+  },
+  "homepage": "https://github.com/MicheleBecerra/cdmx-2018-06-bc-core-am-burger-queen#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.3.4",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}

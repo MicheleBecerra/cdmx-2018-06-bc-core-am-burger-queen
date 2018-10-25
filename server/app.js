@@ -11,20 +11,11 @@ app.set('port', process.env.PORT || 3800)
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
-// Routes: rutas de prueba
-app.get('/', (req, res) => {
-    res.status(200).send({
-        message: 'Accion de prueba de la ruta "home" en el servidor de NodeJS'
-    })
-})
-app.post('/pruebas', (req, res) => {
-    res.status(200).send({
-        message: 'Accion de prueba de la ruta "pruebas" en el servidor de NodeJS'
-    })
-})
+// Routes: cargando las rutas
+const user_routes = require('./routes/user')
 
+// Rutas
 
-// Starting server
-
+app.use('/api', user_routes)
 // Exportar
 module.exports = app

@@ -11,4 +11,5 @@ const userSchema = Schema({
     image: String
 })
 // Se usa el metodo model de mongoose y se le indica el nombre de la entidad y el nombre del esquema que le dará forma al objeto
+
 module.exports = mongoose.model('User', userSchema) 

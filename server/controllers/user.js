@@ -73,14 +73,22 @@ function loginUser (req, res){
         if(user){
             bcrypt.compare(password, user.password, (err, check) => {
                 if(check){
+                    if (params.gettoken){
+                        // Si es true devolver token.
+                        // Si no, se genera el token para usuario.
+
+                    }else {
                     // devolver datos del usuario
-                    return res.status(200).send({user})
+                    user.password = undefined;
+                    return res.status(200).send({user});
+                    }
+
                 } else {
                     return res.status(404).send({message: 'El usuario no se ha podido identificar'});
                 }
             })
         }else{
-            return res.status(404).send({message: 'El usuario no se ha podido identificar!!!'})
+            return res.status(404).send({message: 'El usuario no se ha podido identificar!!!'});
         }
     })
 }

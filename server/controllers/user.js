@@ -1,6 +1,7 @@
 // Se carga el metodo de 
 const User = require('../models/user')
 const bcrypt = require('bcrypt-nodejs')  // este modulo nos ayuda a cifrar la contraseña
+const jwt = require('../services/jwt')
 
 function home(req, res) {
     res.status(200).send({
@@ -14,7 +15,7 @@ function pruebas(req, res) {
 }
 
 function saveUser(req, res){
-    const params = req.body   
+    const params = req.body;
     const user =new User(); 
     
     if(params.name && params.role && params.email && params.password && params.image){
@@ -74,9 +75,11 @@ function loginUser (req, res){
             bcrypt.compare(password, user.password, (err, check) => {
                 if(check){
                     if (params.gettoken){
-                        // Si es true devolver token.
-                        // Si no, se genera el token para usuario.
-
+                        // Si es true devolver token .Si no, se genera el token para usuario.
+                        return res.status(200).send({
+                          token: jwt.createToken(user)
+                        })
+                         
                     }else {
                     // devolver datos del usuario
                     user.password = undefined;

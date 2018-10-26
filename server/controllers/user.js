@@ -1,10 +1,13 @@
 // Se carga el metodo de 
 const bcrypt = require('bcrypt-nodejs')  // este modulo nos ayuda a cifrar la contraseña
 let mongoosePagination = require('mongoose-pagination');
+const fs = require('fs');
+const psth =require('path')
 
 const User = require('../models/user')
 const jwt = require('../services/jwt')
 
+//Metodos de prueba
 function home(req, res) {
     res.status(200).send({
         message: 'Accion de prueba de la ruta "home" en el servidor de NodeJS'
@@ -103,14 +106,14 @@ function getUser(req, res) {
  let userId = req.params.id;
 
      User.findById(userId, (err, user) => {
-     if(err) return res.status(500).send({message:'El usuario no existe'});
-     if(!user) return res.status(404).send({message: 'Error en la peticion'});
+     if(err) return res.status(500).send({message: 'Error en la peticion'});
+     if(!user) return res.status(404).send({message: 'El usuario no existe' });
      return res.status(200).send({user});
  });
 }
 // Devolver un listado de las comandas por usuario
 function getCajeras(req, res){
-    const identity_user_id = req.user.sub;
+    let identity_user_id = req.user.sub;
 
     let page = 1 ;
     if (req.params.page){
@@ -135,6 +138,7 @@ function updateUser(req, res){
     const update = req.body;
     // Borrar pasword
     delete update.password;
+
     if(userId != req.user.sub){
         return res.status(500).send({message: 'No tienes permiso para actualizar los datos'})
     }
@@ -144,18 +148,14 @@ function updateUser(req, res){
         if(!userUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario'});
         
         return res.status(200).send({user: userUpdated});
-    });
+    })
 }
 // Subir archivo de imagen de usuario - cajera
 
 function uploadImage(req, res) {
     const userId = req.params.id;
     
-
-    if(userId != req.user.sub){
-        return res.status(500).send({ message: 'No estas autorizado para cambiar la imagen de usuario'});
-
-    }
+    
     if(req.files){
         const file_path = req.files.image.path;
         // console.log(file_path);
@@ -172,15 +172,36 @@ function uploadImage(req, res) {
         const file_ext = ext_split[1];
         console.log(file_ext);
 
+        if(userId != req.user.sub){
+            return res.status(500).send({ message: 'No estas autorizado para cambiar la imagen de usuario'});
+        
         if(file_ext == 'png'|| file_ext == 'jpg' || file_ext == 'gif'){
             // Actualiza documento de usuario logeado
+            User.findByIdAndUpdate(userId, {image: file_name}, {new:true}, (err, userUpdated) => {
+
+                if(err) return res.status(500).send({message:'Error en la petición'});
+
+                if(!userUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario'});
+        
+                return res.status(200).send({user: userUpdated});
+
+            });
+
         } else {
-            
+            removeFilesOfUpload(file_path);
         }
     } else{
-        return res.status(200).send({message: 'No se han subido archivos de imagen'})
+        return res.status(200).send({message: 'No se han subido archivos de imagen'});
+        }
     }
 }
+
+function removeFilesOfUpload(res, file_path) {
+    fs.unlink(file_path, (err) => {
+        return res.status(200).send({message: 'Extensión no valida'});
+    });
+}
+
 module.exports = {
     home,
     pruebas,

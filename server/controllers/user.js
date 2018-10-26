@@ -158,23 +158,23 @@ function uploadImage(req, res) {
     
     if(req.files){
         const file_path = req.files.image.path;
-        // console.log(file_path);
+        // console.log5 , (file_path);
        
         const file_split = file_path.split('\\');
-        console.log(file_split);
+        console.log(4 ,file_split);
         
         const file_name = file_split[2];
-        console.log(file_name);
+        console.log(3 , file_name);
 
         const ext_split = file_name.split('\.');
-        console.log(ext_split);
+        console.log(2 , ext_split);
         
         const file_ext = ext_split[1];
-        console.log(file_ext);
+        console.log(1 , file_ext);
 
         if(userId != req.user.sub){
-            return res.status(500).send({ message: 'No estas autorizado para cambiar la imagen de usuario'});
-        
+            return res.status(500).send( res, file_path, 'No estas autorizado para cambiar la imagen de usuario');
+        }
         if(file_ext == 'png'|| file_ext == 'jpg' || file_ext == 'gif'){
             // Actualiza documento de usuario logeado
             User.findByIdAndUpdate(userId, {image: file_name}, {new:true}, (err, userUpdated) => {
@@ -184,21 +184,32 @@ function uploadImage(req, res) {
                 if(!userUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario'});
         
                 return res.status(200).send({user: userUpdated});
-
             });
 
         } else {
-            removeFilesOfUpload(file_path);
+            removeFilesOfUpload(res, file_path, 'Extensión no válida');
         }
-    } else{
+    } else { 
         return res.status(200).send({message: 'No se han subido archivos de imagen'});
         }
     }
-}
 
 function removeFilesOfUpload(res, file_path) {
     fs.unlink(file_path, (err) => {
         return res.status(200).send({message: 'Extensión no valida'});
+    });
+}
+
+function getImageFile(req, res){
+    const image_file = req.params.imageFile;
+    const file_path = '/upload/users/' + image_file;
+
+    fs.exists(path_file, (exists) => {
+        if(exists){
+            res.sendFile(path.resolve(path_file));
+        }else{
+            return res.status(200).send({message: 'No existe la imagen ...'})
+        }
     });
 }
 
@@ -210,5 +221,6 @@ module.exports = {
     getUser,
     getCajeras,
     updateUser,
-    uploadImage
+    uploadImage,
+    getImageFile
 }

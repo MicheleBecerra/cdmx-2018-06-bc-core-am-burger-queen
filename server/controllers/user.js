@@ -196,6 +196,7 @@ function uploadImage(req, res) {
         }
     }
 
+
 function removeFilesOfUpload(res, file_path, message) {
     fs.unlink(file_path, (err) => {
         return res.status(200).send({message: message});
@@ -203,15 +204,15 @@ function removeFilesOfUpload(res, file_path, message) {
 }
 
 function getImageFile(req, res){
-    let image_file = req.params.imageFile;
-    let path_file = '/upload/users/' + image_file;
+    let imageFile = req.params.imageFile ;
+    let path_file = './uploads/users/' +imageFile
 
     fs.exists(path_file, (exists) => {
         if(exists){
-            res.sendFile(path.resolve(path_file));
+            res.sendFile(path.resolve(path_file))
         }else{
             res.status(200).send({message: 'No existe la imagen ...'})
-        }
+        }        
     });
 }
 
@@ -225,4 +226,5 @@ module.exports = {
     updateUser,
     uploadImage,
     getImageFile
+    
 }

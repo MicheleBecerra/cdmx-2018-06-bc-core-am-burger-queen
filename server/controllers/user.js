@@ -1,6 +1,8 @@
 // Se carga el metodo de 
-const User = require('../models/user')
 const bcrypt = require('bcrypt-nodejs')  // este modulo nos ayuda a cifrar la contraseña
+let mongoosePagination = require('mongoose-pagination');
+
+const User = require('../models/user')
 const jwt = require('../services/jwt')
 
 function home(req, res) {
@@ -95,10 +97,61 @@ function loginUser (req, res){
         }
     })
 }
+// Obtenr los datos del usuario: id del usuario llega por la url y se utiliza el metodo req.params
 
+function getUser(req, res) {
+ let userId = req.params.id;
+
+     User.findById(userId, (err, user) => {
+     if(err) return res.status(500).send({message:'El usuario no existe'});
+     if(!user) return res.status(404).send({message: 'Error en la peticion'});
+     return res.status(200).send({user});
+ });
+}
+// Devolver un listado de las comandas por usuario
+function getCajeras(req, res){
+    const identity_user_id = req.user.sub;
+
+    let page = 1 ;
+    if (req.params.page){
+        page = req.params.page;
+    }
+
+    let itemsPerPage = 5;
+
+    User.find().sort('_id').paginate(page, itemsPerPage, (err, cajeras, total) => {
+        if(err) return res.status(500).send({message:'Error en la petición'})
+        if(!cajeras) return res.status(500).send({message: 'No hay usuarios disponibles'});
+        return res.status(200).send({
+            cajeras, 
+            total,
+            pages: Math.ceil(total/itemsPerPage)
+        })
+    })
+}
+// Editar datos del usuario
+function updateUser(req, res){
+    const userId = req.params.id;
+    const update = req.body;
+    // Borrar pasword
+    delete update.password;
+    if(userId != req.user.sub){
+        return res.status(500).send({message: 'No tienes permiso para actualizar los datos'})
+    }
+    User.findByIdAndUpdate(userId, update, {new:true}, (err, userUpdated) => {
+        if(err) return res.status(500).send({message:'Error en la petición'});
+
+        if(!userUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario'});
+        
+        return res.status(200).send({user: userUpdated});
+    });
+}
 module.exports = {
     home,
     pruebas,
     saveUser,
-    loginUser
+    loginUser, 
+    getUser,
+    getCajeras,
+    updateUser
 }

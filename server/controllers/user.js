@@ -146,6 +146,41 @@ function updateUser(req, res){
         return res.status(200).send({user: userUpdated});
     });
 }
+// Subir archivo de imagen de usuario - cajera
+
+function uploadImage(req, res) {
+    const userId = req.params.id;
+    
+
+    if(userId != req.user.sub){
+        return res.status(500).send({ message: 'No estas autorizado para cambiar la imagen de usuario'});
+
+    }
+    if(req.files){
+        const file_path = req.files.image.path;
+        // console.log(file_path);
+       
+        const file_split = file_path.split('\\');
+        console.log(file_split);
+        
+        const file_name = file_split[2];
+        console.log(file_name);
+
+        const ext_split = file_name.split('\.');
+        console.log(ext_split);
+        
+        const file_ext = ext_split[1];
+        console.log(file_ext);
+
+        if(file_ext == 'png'|| file_ext == 'jpg' || file_ext == 'gif'){
+            // Actualiza documento de usuario logeado
+        } else {
+            
+        }
+    } else{
+        return res.status(200).send({message: 'No se han subido archivos de imagen'})
+    }
+}
 module.exports = {
     home,
     pruebas,
@@ -153,5 +188,6 @@ module.exports = {
     loginUser, 
     getUser,
     getCajeras,
-    updateUser
+    updateUser,
+    uploadImage
 }

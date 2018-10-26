@@ -201,14 +201,14 @@ function removeFilesOfUpload(res, file_path) {
 }
 
 function getImageFile(req, res){
-    const image_file = req.params.imageFile;
-    const file_path = '/upload/users/' + image_file;
+    let image_file = req.params.imageFile;
+    let file_path = '/upload/users/' + image_file;
 
     fs.exists(path_file, (exists) => {
         if(exists){
             res.sendFile(path.resolve(path_file));
         }else{
-            return res.status(200).send({message: 'No existe la imagen ...'})
+            res.status(200).send({message: 'No existe la imagen ...'})
         }
     });
 }

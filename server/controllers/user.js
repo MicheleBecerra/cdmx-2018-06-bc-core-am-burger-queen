@@ -155,10 +155,12 @@ function updateUser(req, res){
 function uploadImage(req, res) {
     const userId = req.params.id;
     
-    
+    if(userId != req.user.sub){
+        return res.status(500).send({message: 'No tienes permiso para actualizar los datos'})
+    }
     if(req.files){
         const file_path = req.files.image.path;
-        // console.log5 , (file_path);
+        // console.log(file_path);
        
         const file_split = file_path.split('\\');
         console.log(4 ,file_split);
@@ -173,7 +175,7 @@ function uploadImage(req, res) {
         console.log(1 , file_ext);
 
         if(userId != req.user.sub){
-            return res.status(500).send( res, file_path, 'No estas autorizado para cambiar la imagen de usuario');
+            removeFilesOfUpload(res, file_path,'No tienes permiso para actualizar los datos');
         }
         if(file_ext == 'png'|| file_ext == 'jpg' || file_ext == 'gif'){
             // Actualiza documento de usuario logeado
@@ -194,9 +196,9 @@ function uploadImage(req, res) {
         }
     }
 
-function removeFilesOfUpload(res, file_path) {
+function removeFilesOfUpload(res, file_path, message) {
     fs.unlink(file_path, (err) => {
-        return res.status(200).send({message: 'Extensión no valida'});
+        return res.status(200).send({message: message});
     });
 }
 

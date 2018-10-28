@@ -1,5 +1,5 @@
 'user strict'
-const path =require('path');
+const path = require('path');
 const fs  = require('fs');
 
 const moment = require('moment')
@@ -16,7 +16,7 @@ const User = require('../models/user')
 function probando(req, res){
     res.status(200).send({
       message: 'Hola desde el controlador de publicación de comandas'  
-    })
+    });
 }
 
 module.exports = {

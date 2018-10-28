@@ -1,3 +1,4 @@
+'use strict'
 // La configuracion de expresss se crea en esta carpeta y se importa a index.js 
 
 const expresss = require('express')

@@ -25,9 +25,10 @@ function pruebas(req, res) {
 function saveUser(req, res){
     const params = req.body;
     const user =new User(); 
+    console.log(req.body);
     
     
-    if(params.name && params.role && params.email && params.password && params.image){
+    if(params.name && params.role && params.email && params.password){
         user.name = params.name,
         user.role = params.role,
         user.email = params.email,
@@ -39,12 +40,12 @@ function saveUser(req, res){
             {email: user.email.toLowerCase()}     
         ]}).exec((err, users) => {
             if(err)
-            return res.status(580).send({message: 'Error al cargar la peticion del usuario'}) 
+            return res.status(500).send({message: 'Error al cargar la peticion del usuario'}) 
 
             if(users && users.length >= 1){
                 return res.status(200).send({ message: 'El usuaruario/correo ya se tiene registrado'})
             } else {
-                // Aqui vamos a guardar la contraseña cifrada. LE va ahacer el encriptado y guarda el password en la bd
+                // Aqui vamos a guardar la contraseña cifrada. Le va a hacer el encriptado y guarda el password en la bd
         bcrypt.hash( params.password, null, null, (err, hash) => {
             user.password = hash
             // Se guarda el registro del usuario
@@ -54,7 +55,7 @@ function saveUser(req, res){
                 if (userStored){
                     res.status(200).send({user:userStored})
                 } else {
-                    res.status(400).send({ message: 'No se ha registrado al usuario'})
+                    res.status(404).send({ message: 'No se ha registrado al usuario'})
                 }
             })
         })
@@ -63,12 +64,10 @@ function saveUser(req, res){
 })
 
     } else {
-
         res.status(200).send({
-            message: 'Envía todos los campos necesarios!!'
+            message: 'Por favor llena todos los campos necesarios!!'
         })
     }
-
 }
 
 function loginUser (req, res){
@@ -102,7 +101,7 @@ function loginUser (req, res){
         }else{
             return res.status(404).send({message: 'El usuario no se ha podido identificar!!!'});
         }
-    })
+    });
 }
 // Obtenr los datos del usuario: id del usuario llega por la url y se utiliza el metodo req.params
 
@@ -117,18 +116,19 @@ function getUser(req, res) {
 }
 // Devolver un listado de las comandas por usuario
 function getCajeras(req, res){
+
     let identity_user_id = req.user.sub;
-    console.log(body.req);
+    
     let page = 1 ;
     if (req.params.page){
         page = req.params.page;
     }
-
+    // console.log(body.req);
     let itemsPerPage = 5;
 
     User.find().sort('_id').paginate(page, itemsPerPage, (err, cajeras, total) => {
         if(err) return res.status(500).send({message:'Error en la petición'})
-        if(!cajeras) return res.status(500).send({message: 'No hay usuarios disponibles'});
+        if(!cajeras) return res.status(404).send({message: 'No hay usuarios disponibles'});
         return res.status(200).send({
             cajeras, 
             total,
@@ -140,12 +140,25 @@ function getCajeras(req, res){
 function updateUser(req, res){
     const userId = req.params.id;
     const update = req.body;
+    // console.log(update);
+    
     // Borrar pasword
     delete update.password;
-
+    // Se evita que un usuario actualice datos de otro usuario
     if(userId != req.user.sub){
         return res.status(500).send({message: 'No tienes permiso para actualizar los datos'})
     }
+
+    User.find({ $or : [
+        {email: update.email.toLowerCase()},
+        {name: update.name.toLowerCase()}
+    ]}).exec((err, cajeras) => {
+        const user_isset = false ;
+        cajeras.forEach((user) => {
+            if(user && user._id != userId) user_isset = true
+        })
+    if(user_isset) return res.status(404).send({message:'Los datos ya estan registrados'})
+
     User.findByIdAndUpdate(userId, update, {new:true}, (err, userUpdated) => {
         if(err) return res.status(500).send({message:'Error en la petición'});
 
@@ -153,33 +166,34 @@ function updateUser(req, res){
         
         return res.status(200).send({user: userUpdated});
     })
+  })
 }
 // Subir archivo de imagen de usuario - cajera
 
 function uploadImage(req, res) {
     const userId = req.params.id;
     
-    if(userId != req.user.sub){
-        return res.status(500).send({message: 'No tienes permiso para actualizar los datos'})
-    }
+    // if(userId != req.user.sub){
+    //     return res.status(500).send({message: 'No tienes permiso para actualizar los datos'})
+    // }
     if(req.files){
-        const file_path = req.files.image.path;
-        // console.log(file_path);
-       
-        const file_split = file_path.split('\\');
+        let file_path = req.files.image.path;
+        console.log(file_path); 
+             
+        let file_split = file_path.split('\\');
         console.log(4 ,file_split);
         
-        const file_name = file_split[2];
+        let file_name = file_split[2];
         console.log(3 , file_name);
 
-        const ext_split = file_name.split('\.');
+        let ext_split = file_name.split('\.');
         console.log(2 , ext_split);
         
-        const file_ext = ext_split[1];
+        let file_ext = ext_split[1];
         console.log(1 , file_ext);
 
         if(userId != req.user.sub){
-            removeFilesOfUpload(res, file_path,'No tienes permiso para actualizar los datos');
+           return removeFilesOfUpload(res, file_path,'No tienes permiso para actualizar los datos');
         }
         if(file_ext == 'png'|| file_ext == 'jpg' || file_ext == 'gif'){
             // Actualiza documento de usuario logeado
@@ -193,7 +207,7 @@ function uploadImage(req, res) {
             });
 
         } else {
-            removeFilesOfUpload(res, file_path, 'Extensión no válida');
+            return removeFilesOfUpload(res, file_path, 'Extensión no válida');
         }
     } else { 
         return res.status(200).send({message: 'No se han subido archivos de imagen'});
@@ -209,7 +223,7 @@ function removeFilesOfUpload(res, file_path, message) {
 
 function getImageFile(req, res){
     let imageFile = req.params.imageFile ;
-    let path_file = './uploads/users/' +imageFile
+    let path_file = './uploads/users/' + imageFile;
 
     fs.exists(path_file, (exists) => {
         if(exists){
@@ -217,7 +231,7 @@ function getImageFile(req, res){
         }else{
             res.status(200).send({message: 'No existe la imagen ...'})
         }        
-    });
+    })
 }
 
 module.exports = {

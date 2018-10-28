@@ -1,3 +1,4 @@
+'user strict'
 const fs = require('fs');
 const psth =require('path')
 

@@ -1,11 +1,13 @@
-// Se carga el metodo de 
-const bcrypt = require('bcrypt-nodejs')  // este modulo nos ayuda a cifrar la contraseña
-let mongoosePagination = require('mongoose-pagination');
 const fs = require('fs');
 const psth =require('path')
 
 const User = require('../models/user')
+
+// Se carga el modulo de bcryp para encriptar la constraseña
 const jwt = require('../services/jwt')
+const bcrypt = require('bcrypt-nodejs')  
+let mongoosePaginate = require('mongoose-pagination')
+
 
 //Metodos de prueba
 function home(req, res) {
@@ -19,9 +21,11 @@ function pruebas(req, res) {
     })
 }
 
+// Funcion para registrar al usuario
 function saveUser(req, res){
     const params = req.body;
     const user =new User(); 
+    
     
     if(params.name && params.role && params.email && params.password && params.image){
         user.name = params.name,
@@ -114,7 +118,7 @@ function getUser(req, res) {
 // Devolver un listado de las comandas por usuario
 function getCajeras(req, res){
     let identity_user_id = req.user.sub;
-
+    console.log(body.req);
     let page = 1 ;
     if (req.params.page){
         page = req.params.page;

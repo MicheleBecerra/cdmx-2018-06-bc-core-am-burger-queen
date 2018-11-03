@@ -4,30 +4,15 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const comandaSchema = Schema({
-    cajera:{
-        type: [mongoose.Schema.Types.ObjectId],
-        required: true,
-        ref:'User'
-    },
-    desayuno:{
-        type:[mongoose.Schema.Types.ObjectId],
-        required: true,
-        ref:'Desayuno'
-    },
-    comida:{
-        type:[mongoose.Schema.Types.ObjectId],
-        required: true,
-        ref:'Comida'
-    },
-    bebida:{
-        type: String,
-        required: true,
-        ref:'Bebida'
-    },
-    total:{
-        type: Number,
-        required: true
-    }
+    
+    text: {type: String},
+    user: {type: Schema.ObjectId, ref:'User' },
+    desayuno: { type: String },
+    comida: { type: String},
+    bebida: { type: String},
+    total: { type: Number},
+    file: {type: String},
+    created_at: {type: String}
 })
 
 module.exports = mongoose.model('Comanda', comandaSchema)

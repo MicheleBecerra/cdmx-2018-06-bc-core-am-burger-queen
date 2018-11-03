@@ -8,6 +8,7 @@ const app = expresss()
 
 // Settings
 app.set('port', process.env.PORT || 3800)
+
 // Middleware
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
@@ -16,9 +17,9 @@ app.use(bodyParser.json())
 const user_routes = require('./routes/user');
 const comanda_routes = require('./routes/comanda');
 
-// Rutas: congiracion de las rutas en app
+// Rutas: congiracion de las rutas en app.
 app.use('/api', user_routes);
-app.use('./api', comanda_routes);
+app.use('/api', comanda_routes);
 
 // Exportar
-module.exports = app
+module.exports = app;

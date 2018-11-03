@@ -143,7 +143,7 @@ function updateUser(req, res){
     const update = req.body;
     // console.log(update);
     
-    // Borrar pasword
+    // Borrar password
     delete update.password;
     // Se evita que un usuario actualice datos de otro usuario
     if(userId != req.user.sub){
@@ -225,18 +225,17 @@ function removeFilesOfUpload(res, file_path, message) {
 function getImageFile(req, res){
     const image_file = req.params.imageFile ;
     const path_file = './uploads/users/' + image_file;
-    console.log( 6 , path_file);
+    console.log( path_file );
 
     fs.exists(path_file, (exists) => {
         
         if(exists){
             res.sendFile(path.resolve(path_file))
-        
-        
+         
         }else{
             res.status(200).send({message: 'No existe la imagen ...'})
         }        
-    })
+    });
 }
 
 module.exports = {

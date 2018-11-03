@@ -42,7 +42,34 @@ function saveComanda(req, res){
     })
 }
 
+function getComanda(req, res){
+    const comandaId = req.params.id;
+
+    Comanda.findById(comandaId, (err, comanda) => {
+        if (err)
+        return res.status(500).send({
+            message: 'Error al devolver la comanda'});
+        if(!comanda) return res.status(400).send({ message: 'No existe la comanda que busca'});
+        
+        return res.status(200).send({comanda});
+    });
+}
+function deleteComanda (req, res){
+    const comandaId = req.params.id;
+
+    Comanda.find({'user': req.user.sub, '_id': comandaId}).remove((err, comandaRemoved) => {
+        if (err)
+        return res.status(500).send({
+            message: 'Error al borrar la comanda'});
+        if(!comandaRemoved) return res.status(400).send({ message: 'No se ha borrado la comanda'});
+        
+        return res.status(200).send({message: 'La comanda se ha borrado correctamente'});
+    })
+}
+
 module.exports = {
     probando, 
-    saveComanda
+    saveComanda,
+    getComanda,
+    deleteComanda
 }

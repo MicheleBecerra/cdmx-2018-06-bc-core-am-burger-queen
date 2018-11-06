@@ -6,7 +6,7 @@ import {Component, OnInit} from '@angular/core';
     templateUrl: './register.component.html',
 })
 
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
     public title: string;
 
     constructor() {

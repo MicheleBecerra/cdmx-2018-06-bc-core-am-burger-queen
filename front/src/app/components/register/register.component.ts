@@ -31,4 +31,8 @@ export class RegisterComponent implements OnInit {
     ngOnInit() {
         console.log('Componente de registro cargado ...');
     }
+
+    onSubmit() {
+        console.log(this.user);
+    }
 }

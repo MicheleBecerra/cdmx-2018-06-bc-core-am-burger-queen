@@ -1,8 +1,8 @@
-<div>
-    <div class="card-body">
+<div class="card col-lg-6">
+    <div>
     <h1 class="h1-strong">{{title}}</h1>
-    <form #registerForm="ngForm" (ngSubmit) = "onSubmit(registerForm)" class = "col col-lg-5">
-    <!-- <div class="card-body"> -->
+    <form #registerForm="ngForm" (ngSubmit) = "onSubmit(registerForm)" class = "col col-lg-6">
+            <div class="card-body">
     <p>
         <label> Nombre </label>
         <input type="text" name="name" #name="ngModel" [(ngModel)] = "user.name" class = "form-control" required />
@@ -36,7 +36,7 @@
         </span>
     </p>
     <input type= "submit" value=" {{title}}" class="btn btn-success" [disabled] = "!registerForm.form.valid"> 
-    <!-- </div> -->
+    </div>
     </form>
     </div>
 </div>

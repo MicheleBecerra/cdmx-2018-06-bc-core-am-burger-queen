@@ -1,17 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
-.navigation{
-    margin: 0px;
-    padding: 0px  !important;
-
+.h1-strong{
+font-size: 30px;
+font-weight: bold;
+margin-left: 13px;
+margin-bottom: 25px; 
+padding-bottom: 15px ;
+border-bottom: 2px solid #eeeeee;
 }
+/* .navigation{
+    font-size: 15px;
+} */
 .navigation .navbar {
+
     border-radius: 0px !important;
     background: #E95420;
-    border: none;
-    
-    
+    border: none;   
 }
-.navigation .navbar {
+ .navbar {
+    font-size: 15px;
     color: whitesmoke !important;
+    margin: 15px !important;
+    
 }

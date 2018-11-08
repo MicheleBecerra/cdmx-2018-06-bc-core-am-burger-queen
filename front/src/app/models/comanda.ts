@@ -1,7 +1,7 @@
 export class Comanda {
-    construstos(
+    constructor (
         public _id: string,
-        public user:string,
+        public user: string,
         public desayuno: string,
         public comida: string,
         public bebida: string,

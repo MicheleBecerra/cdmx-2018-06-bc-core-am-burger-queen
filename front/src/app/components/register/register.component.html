@@ -1,6 +1,7 @@
-<div>
+<div class = "col-lg-4">
+    <div class="card">
     <h1>{{title}}</h1>
-    <form #registerForm="ngForm" (ngSubmit) = "onSubmit(registerForm)" class = "col-lg-10" ></form>
+    <form #registerForm="ngForm" (ngSubmit) = "onSubmit(registerForm)" >
     <p>
         <label> Nombre </label>
         <input type="text" name="name" #name="ngModel" [(ngModel)] = "user.name" class = "form-control" required />
@@ -19,19 +20,24 @@
 
     <p>
         <label> Correo electrónico </label>
-        <input type="text" name="email" #email="ngModel" [(ngModel)] = "user.email" class = "form-control" required />
+        <input type="text" name="email" #email="ngModel" [(ngModel)] = "user.email" class = "form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
         <span *ngIf = "!email.valid && email.touched">
             ¡El email es obligatorio!
         </span>
     </p>
     
     <p>
-        <label> Password </label>
-        <input type="text" name="pasword" #password="ngModel" [(ngModel)] = "user.password" class = "form-control" required />
+        <label> Contraseña </label>
+        <input type="text" name=
+        "pasword" #password="ngModel" [(ngModel)] = "user.password" class = "form-control" required />
         <span *ngIf = "!password.valid && password.touched">
-            ¡Introducir el password es obligatorio!
+            ¡Introducir la contraseña es obligatorio!
         </span>
     </p>
+    <input type= "submit" value=" {{title}}" class="btn btn-success" [disabled] = "!registerForm.form.valid"> 
+
+    </form>
+    </div>
 </div>
 
 

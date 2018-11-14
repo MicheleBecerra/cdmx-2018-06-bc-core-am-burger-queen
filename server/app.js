@@ -1,4 +1,3 @@
-'use strict'
 // La configuracion de expresss se crea en esta carpeta y se importa a index.js 
 
 const expresss = require('express')
@@ -17,7 +16,17 @@ app.use(bodyParser.json())
 const user_routes = require('./routes/user');
 const comanda_routes = require('./routes/comanda');
 
-// Rutas: congiracion de las rutas en app.
+// CORS
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+ 
+    next();
+});
+
+// Rutas: configuracion de las rutas en app.
 app.use('/api', user_routes);
 app.use('/api', comanda_routes);
 

@@ -21,4 +21,12 @@ export class UserService {
 
         return this._http.post(this.url + 'register', params, {headers: headers});
     }
+    signup(user: User, gettoken= null): Observable<any> {
+        if (gettoken != null) {
+         user =Object.assign(user, {gettoken} );
+        }
+    const params = JSON.stringify(user);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.post(this.url + 'login', params, {headers: headers });
+    }
 }

@@ -14,7 +14,7 @@ import { UserService} from '../../services/user.service';
 export class RegisterComponent implements OnInit {
     public title: string;
     public user: User;
-    public: status:string;
+    public status: string;
 
     constructor(
         private _route: ActivatedRoute,
@@ -41,9 +41,9 @@ export class RegisterComponent implements OnInit {
             response => {
                 if (response.user && response.user._id) {
                       console.log(response.user);
-                     this status = 'sucess' ;
+                     this.status = 'sucess' ;
                      form.reset();
-                }else{
+                } else {
                     this.status = 'error';
                 }
             },

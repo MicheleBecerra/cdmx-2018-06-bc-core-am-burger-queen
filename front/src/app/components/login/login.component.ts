@@ -13,6 +13,7 @@ import { UserService } from '../../services/user.service';
 export class LoginComponent implements OnInit {
     public title: string;
     public user: User;
+    public status: string;
 
     constructor(
         private _route: ActivatedRoute,
@@ -24,5 +25,24 @@ export class LoginComponent implements OnInit {
     }
     ngOnInit() {
         console.log('Componente de login cargado ...');
+    }
+    onSubmit() {
+        // Conseguir datos depues de logear al usuario
+        this._userService.signup(this.user).subscribe(
+            response => {
+                console.log(response.user);
+            },
+            error => {
+            const errorMensaje = <any>error;
+            console.log(errorMensaje);
+
+            if (errorMensaje != null) {
+            this.status = 'error';
+                }
+            }
+        );
+        alert(this.user.email);
+        alert(this.user.password);
+        console.log(this.user);
     }
 }

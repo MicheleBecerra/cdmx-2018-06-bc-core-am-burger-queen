@@ -13,9 +13,9 @@ export class UserService {
     }
 
     register(user: User): Observable<any> {
-        let params = JSON.stringify(user);
+        const params = JSON.stringify(user);
         // configuramos las cabeceras
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
         console.log(headers);
 

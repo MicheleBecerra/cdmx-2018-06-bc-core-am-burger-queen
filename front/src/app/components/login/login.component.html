@@ -1,6 +1,14 @@
 <div class="col col-lg-5">   
     <h1 class="h1-strong">{{title}}</h1>
 
+<div class = "alert alert-success" *ngIf = "status == 'success'">
+        Te has identificado correctamente. Bienvenido !! 
+</div> 
+
+<div class= "alert alert-danger" *ngIf="status == 'error'">
+        No se reconoce el usuario o password, intentálo más tarde.
+</div>
+
  <!-- NgSubmmit es el evento y onSubmit es el método que se manda a llamar     -->
     <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class= "col col-lg-12">
     <p>

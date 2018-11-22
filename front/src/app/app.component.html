@@ -16,14 +16,14 @@
         </li>
         
         <li>
-          <a href="#" style="color:blanchedalmond">
+          <a href="#" style="color:blanchedalmond" >
               <span class= "glyphicon glyphicon-apple" style="color:blanchedalmond"></span>
             DESAYUNOS
           </a>
        </li>
 
        <li >
-        <a href="#" style="color:blanchedalmond">
+        <a href="#" style="color:blanchedalmond" >
           <span class= "glyphicon glyphicon-cutlery" style="color:blanchedalmond"></span>
             COMIDA 
         </a>
@@ -39,22 +39,44 @@
       
       <ul class= "nav navbar navbar-nav navbar-right">
         <li >
-          <a [routerLink]= "['/login']" [routerLinkActive] = "['active']" 
-          style="color:blanchedalmond">
-            <span class= "glyphicon glyphicon-log-in" style="color:blanchedalmond"></span>
+          <a [routerLink]= "['/login']" 
+          style="color:blanchedalmond" *ngIf ="!identity">
+            <span class= "glyphicon glyphicon-log-in" style="color:rgb(228, 212, 187)"></span>
               Ingresa tu usuario.
           </a>
         </li>
   
         <li>
-          <a [routerLink]= "['/registro']" [routerLinkActive]= "['active']"
-          style="color:blanchedalmond">
+          <a [routerLink]= "['/registro']" 
+          style="color:blanchedalmond" *ngIf ="!identity">
             <span class= "glyphicon glyphicon-user" style="color:blanchedalmond"></span>
                 Registro primer ingreso.
           </a>
         </li>
       </ul>
-      
+
+      <ul class="nav navbar navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle= "dropdown">
+            {{identity.name}}<span class="caret"></span>
+          </a>
+
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#"><span class="glyphicon glyphicon-user"></span>Cajer@</a>
+            </li>
+            <li>
+              <a href="#"><span class="glyphicon glyphicon-pencil"></span>Comandas</a>
+            </li>
+            <li>
+              <a href="#"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión</a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+
+
     </div>
   </nav>
 </div>

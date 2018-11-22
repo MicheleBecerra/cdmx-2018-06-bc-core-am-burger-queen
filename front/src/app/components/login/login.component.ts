@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
     public status: string;
     public identity;
     public token;
+    public isLogin: boolean;
 
     constructor(
         private _route: ActivatedRoute,
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
     }
     ngOnInit() {
         console.log('Componente de login cargado ...');
+        this.isLogin = true;
     }
     onSubmit() {
         // Conseguir datos depues de logear al usuario
@@ -37,8 +39,10 @@ export class LoginComponent implements OnInit {
 
                 if (!this.identity || !this.identity._id) {
                     this.status = 'error';
+                    // this.isLogin = false;
                 } else {
-                    this.status = "success";
+                    this.status = 'success';
+                    // this.isLogin = true;
 
                     // persistencia de los datos del usuario
                     localStorage.setItem('identity', JSON.stringify(this.identity));

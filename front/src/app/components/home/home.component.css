@@ -1,1 +1,10 @@
-
+ body {
+    background: url("/assets/images/bg-wall.jpg");
+    height: 600px;
+    width: 100%;
+}
+.jumbotron{
+    padding: 25px;
+    border-radius: 25px;
+    text-align: center;
+}

@@ -20,7 +20,7 @@
     </p>
 
     <p>
-        <label>Ccontraseña</label>
+        <label>Contraseña</label>
         <input type="password" name="password" #password= "ngModel" [(ngModel)]="user.password" class= "form-control" required /> 
         <span *ngIf = "!password.valid && password.touched">
                !La cosntraseña es obligatoria!

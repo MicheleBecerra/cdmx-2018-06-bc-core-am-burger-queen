@@ -8,7 +8,8 @@
 
       <ul class="nav navbar-nav"  *ngIf = "identity">
         <li>
-          <a href="#" style="color:blanchedalmond">
+          <a [routerLink]="['/home
+          ']" style="color:blanchedalmond">
             <span class= "glyphicon glyphicon-home" style="color:blanchedalmond" ></span>
             INICIO
           </a>
@@ -46,7 +47,7 @@
         </li>
   
         <li>
-          <a [routerLink]= "['/login']" [routerLinkActive]= "['active']"
+          <a [routerLink]= "['/registro']" [routerLinkActive]= "['active']"
           style="color:blanchedalmond">
             <span class= "glyphicon glyphicon-user" style="color:blanchedalmond"></span>
                 Registro primer ingreso.

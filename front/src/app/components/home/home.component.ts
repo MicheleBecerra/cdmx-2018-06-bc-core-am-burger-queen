@@ -7,12 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
     public title: string;
-    
+
     constructor() {
         this.title = 'Bienvenido a Burguer Queen';
     }
     ngOnInit () {
-        console.log('home.component se ha cargado!!');
+        console.log('home.component se ha cargado correctamente!!');
 
     }
 }

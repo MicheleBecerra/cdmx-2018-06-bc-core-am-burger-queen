@@ -25,7 +25,7 @@ export class UserService {
     }
     signup(user: User, gettoken= null): Observable<any> {
         if (gettoken != null) {
-         user =Object.assign(user, {gettoken} );
+         user = Object.assign(user, {gettoken} );
         }
     const params = JSON.stringify(user);
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -34,7 +34,7 @@ export class UserService {
     getIdentity() {
       const identity = JSON.parse(localStorage.getItem('identity'));
 
-      if (identity != 'undefined') {
+      if (identity !== 'undefined') {
           this.identity = identity ;
       } else {
           this.identity = null;
@@ -43,7 +43,7 @@ export class UserService {
     }
     getToken() {
         const token = localStorage.getItem('token');
-        if (token != 'undefined') {
+        if (token !== 'undefined') {
             this.token = token ;
         } else {
             this.token = null ;

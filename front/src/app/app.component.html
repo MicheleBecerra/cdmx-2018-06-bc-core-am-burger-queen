@@ -8,13 +8,12 @@
 
       <ul class="nav navbar-nav"  *ngIf = "identity">
         <li>
-          <a [routerLink]="['/home
-          ']" style="color:blanchedalmond">
+          <a [routerLink]="['/home']" [routerLinkActive]= "['active']" style="color:blanchedalmond">
             <span class= "glyphicon glyphicon-home" style="color:blanchedalmond" ></span>
             INICIO
           </a>
         </li>
-        
+
         <li>
           <a href="#" style="color:blanchedalmond" >
               <span class= "glyphicon glyphicon-apple" style="color:blanchedalmond"></span>
@@ -25,7 +24,7 @@
        <li >
         <a href="#" style="color:blanchedalmond" >
           <span class= "glyphicon glyphicon-cutlery" style="color:blanchedalmond"></span>
-            COMIDA 
+            COMIDA
         </a>
        </li>
 
@@ -36,40 +35,49 @@
           </a>
         </li>
       </ul>
-      
-      <ul class= "nav navbar navbar-nav navbar-right">
-        <li >
-          <a [routerLink]= "['/login']" 
-          style="color:blanchedalmond" *ngIf ="!identity">
+
+      <ul class= "nav navbar navbar-nav navbar-right" *ngIf ="!identity">
+        <li *ngIf ="!identity">
+          <a [routerLink]= "['/login']" [routerLinkActive]= "['active']"
+          style="color:blanchedalmond" >
             <span class= "glyphicon glyphicon-log-in" style="color:rgb(228, 212, 187)"></span>
               Ingresa tu usuario.
           </a>
         </li>
-  
-        <li>
-          <a [routerLink]= "['/registro']" 
-          style="color:blanchedalmond" *ngIf ="!identity">
+
+        <li *ngIf ="!identity">
+          <a [routerLink]= "['/registro']" [routerLinkActive]= "['active']"
+          style="color:blanchedalmond">
             <span class= "glyphicon glyphicon-user" style="color:blanchedalmond"></span>
                 Registro primer ingreso.
           </a>
         </li>
       </ul>
 
-      <ul class="nav navbar navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" *ngIf ="identity">
+        <li class="avatar">
+          <!--  cargar imagen de usuario -->
+        </li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle= "dropdown">
+          <a class="dropdown-toggle" data-toggle= "dropdown" href="#">
             {{identity.name}}<span class="caret"></span>
           </a>
 
           <ul class="dropdown-menu">
             <li>
-              <a href="#"><span class="glyphicon glyphicon-user"></span>Cajer@</a>
+              <a href="#"> <span class="glyphicon glyphicon-user"></span>
+                Cajer@
+              </a>
             </li>
             <li>
-              <a href="#"><span class="glyphicon glyphicon-pencil"></span>Comandas</a>
+              <a href="#"> <span class="glyphicon glyphicon-pencil"></span>
+                Comandas
+              </a>
             </li>
             <li>
-              <a href="#"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión</a>
+              <a href="#"> <span class="glyphicon glyphicon-log-out"></span>
+                Cerrar Sesión
+              </a>
             </li>
           </ul>
         </li>
